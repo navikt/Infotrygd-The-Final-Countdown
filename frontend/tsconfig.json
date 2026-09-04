@@ -13,12 +13,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "allowJs": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./src/*"],
-      "@generated": ["./generated"],
-      "@generated/*": ["./generated/*"]
-    },
     "types": ["vite/client", "node"]
   },
   "include": ["src", "vite-env.d.ts"],
