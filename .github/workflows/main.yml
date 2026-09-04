@@ -1,0 +1,54 @@
+name: Build and Test on Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    uses: ./.github/workflows/build-and-test.yml
+    permissions:
+      packages: read
+      contents: read
+      id-token: write
+
+  build-and-push-image:
+    needs: build-and-test
+    name: "Build and Push Docker Image"
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build and push Docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: infotek
+          docker_context: ./frontend
+
+  deploy-dev:
+    needs: build-and-push-image
+    name: "Deploy Frontend to dev-gcp"
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Deploy frontend to dev-gcp
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          TEAM: infotek
+          RESOURCE: .nais/app/frontend.yaml
+          VARS: .nais/dev.json
+          IMAGE: ${{ needs.build-and-push-image.outputs.image }}

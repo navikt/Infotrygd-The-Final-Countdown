@@ -1,0 +1,32 @@
+name: Build and Test Frontend
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: "Build and Test"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js and install dependencies
+        uses: ./.github/actions/setup
+
+#      - name: Lint code
+#        working-directory: ./frontend
+#        run: pnpm biome
+
+      - name: Type check
+        working-directory: ./frontend
+        run: pnpm exec tsc --noEmit
+
+      - name: Run tests
+        working-directory: ./frontend
+        run: pnpm test
+
+      - name: Build for production
+        working-directory: ./frontend
+        run: pnpm build

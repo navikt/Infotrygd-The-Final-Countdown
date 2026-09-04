@@ -1,0 +1,4 @@
+{
+  "env": "prod",
+  "appIngress": "https://infotrygd-the-final-countdown.intern.nav.no"
+}

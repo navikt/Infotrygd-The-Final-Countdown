@@ -1,0 +1,27 @@
+{
+  "short_name": "Infotrygd-The-Final-Countdown",
+  "name": "Infotrygd-The-Final-Countdown",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#0066CC",
+  "background_color": "#ffffff",
+  "lang": "no",
+  "scope": "/"
+}
