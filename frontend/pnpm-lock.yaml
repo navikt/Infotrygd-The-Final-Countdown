@@ -21,18 +21,21 @@ importers:
         specifier: ^19.1.1
         version: 19.2.8(react@19.2.8)
     devDependencies:
+      '@types/node':
+        specifier: ^22.15.0
+        version: 22.20.1
       '@vitejs/plugin-react':
         specifier: ^5.0.2
-        version: 5.2.0(vite@7.3.6)
+        version: 5.2.0(vite@7.3.6(@types/node@22.20.1))
       jsdom:
         specifier: ^30.0.1
         version: 30.0.1
       vite:
         specifier: ^7.1.3
-        version: 7.3.6
+        version: 7.3.6(@types/node@22.20.1)
       vitest:
         specifier: ^4.1.11
-        version: 4.1.11(jsdom@30.0.1)(vite@7.3.6)
+        version: 4.1.11(@types/node@22.20.1)(jsdom@30.0.1)(vite@7.3.6(@types/node@22.20.1))
 
 packages:
 
@@ -563,6 +566,9 @@ packages:
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
 
+  '@types/node@22.20.1':
+    resolution: {integrity: sha512-EANqOCF9QFyra+4pfxUcX9STKJpCLjMbObVzljIJomAWSnuSIEAvyzEU53GaajbXJEgdh0iEcPL+DGvpUd4k1Q==}
+
   '@vitejs/plugin-react@5.2.0':
     resolution: {integrity: sha512-YmKkfhOAi3wsB1PhJq5Scj3GXMn3WvtQ/JC0xoopuHoXSdmtdStOpFrYaT1kie2YgFBcIe64ROzMYRjCrYOdYw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -868,6 +874,9 @@ packages:
   tr46@6.0.0:
     resolution: {integrity: sha512-bLVMLPtstlZ4iMQHpFHTR7GAGj2jxi8Dg0s2h2MafAE4uSWF98FC/3MomU51iQAMf8/qDUbKWf5GxuvvVcXEhw==}
     engines: {node: '>=20'}
+
+  undici-types@6.21.0:
+    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
   undici@8.10.0:
     resolution: {integrity: sha512-HvltHd7avK13QIw/oLe4qoOLyoVSoafqJ2jYOrtMRBkbYT31eiBQ8O0ehRKZiEZCMEyLFQNIADpgCWC5fALvYQ==}
@@ -1408,7 +1417,11 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
-  '@vitejs/plugin-react@5.2.0(vite@7.3.6)':
+  '@types/node@22.20.1':
+    dependencies:
+      undici-types: 6.21.0
+
+  '@vitejs/plugin-react@5.2.0(vite@7.3.6(@types/node@22.20.1))':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/plugin-transform-react-jsx-self': 7.29.7(@babel/core@7.29.7)
@@ -1416,7 +1429,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-rc.3
       '@types/babel__core': 7.20.5
       react-refresh: 0.18.0
-      vite: 7.3.6
+      vite: 7.3.6(@types/node@22.20.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -1429,13 +1442,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.1
 
-  '@vitest/mocker@4.1.11(vite@7.3.6)':
+  '@vitest/mocker@4.1.11(vite@7.3.6(@types/node@22.20.1))':
     dependencies:
       '@vitest/spy': 4.1.11
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.6
+      vite: 7.3.6(@types/node@22.20.1)
 
   '@vitest/pretty-format@4.1.11':
     dependencies:
@@ -1734,6 +1747,8 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
+  undici-types@6.21.0: {}
+
   undici@8.10.0: {}
 
   update-browserslist-db@1.3.2(browserslist@4.28.8):
@@ -1742,7 +1757,7 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  vite@7.3.6:
+  vite@7.3.6(@types/node@22.20.1):
     dependencies:
       esbuild: 0.28.2
       fdir: 6.5.0(picomatch@4.0.7)
@@ -1751,12 +1766,13 @@ snapshots:
       rollup: 4.63.1
       tinyglobby: 0.2.17
     optionalDependencies:
+      '@types/node': 22.20.1
       fsevents: 2.3.3
 
-  vitest@4.1.11(jsdom@30.0.1)(vite@7.3.6):
+  vitest@4.1.11(@types/node@22.20.1)(jsdom@30.0.1)(vite@7.3.6(@types/node@22.20.1)):
     dependencies:
       '@vitest/expect': 4.1.11
-      '@vitest/mocker': 4.1.11(vite@7.3.6)
+      '@vitest/mocker': 4.1.11(vite@7.3.6(@types/node@22.20.1))
       '@vitest/pretty-format': 4.1.11
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -1773,9 +1789,10 @@ snapshots:
       tinyexec: 1.3.0
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.1
-      vite: 7.3.6
+      vite: 7.3.6(@types/node@22.20.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
+      '@types/node': 22.20.1
       jsdom: 30.0.1
     transitivePeerDependencies:
       - msw
