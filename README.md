@@ -52,6 +52,17 @@ Appen startes normalt på:
 http://localhost:3000
 ```
 
+## Test
+
+Det finnes en liten test som verifiserer at hovedkomponenten rendrer teksten og nedtellingen som forventet.
+
+```bash
+cd frontend
+pnpm test
+```
+
+Dette kjører Vitest med en enkel smoke-test for `App.jsx`.
+
 ## Bygg for produksjon
 
 ```bash
