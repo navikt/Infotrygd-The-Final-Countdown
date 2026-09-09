@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, HGrid, Heading, VStack } from "@navikt/ds-react";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
 const SECOND = 1_000;
@@ -41,53 +41,198 @@ export default function App() {
 
   return (
     <main>
-      <div className="glow glow-one" aria-hidden="true" />
-      <div className="glow glow-two" aria-hidden="true" />
-
-      <section className="countdown-card" aria-labelledby="countdown-title">
-        <div className="eyebrow">The Final Countdown</div>
-        <Heading id="countdown-title" level="1" size="xlarge">
-          31. desember 2028
-        </Heading>
-        <BodyLong className="intro">
-          Tiden som gjenstår til alle fagrutiner i Infotrygd skal være utfaset
-          og slått av
-        </BodyLong>
-
-        {timeLeft.complete ? (
-          <Heading className="complete-message" level="2" size="large">
-            Dagen er her!
-          </Heading>
-        ) : (
-          <div
-            className="countdown"
-            role="timer"
-            aria-live="off"
-            aria-label={`${timeLeft.days} dager, ${timeLeft.hours} timer, ${timeLeft.minutes} minutter og ${timeLeft.seconds} sekunder igjen`}
+      <VStack className="dashboard" gap={{ xs: "space-6", md: "space-8" }}>
+        <section aria-labelledby="countdown-title">
+          <Box
+            className="module countdown-card"
+            background="surface-default"
+            padding={{ xs: "space-6", md: "space-8" }}
+            borderRadius="large"
           >
-            <TimeUnit value={timeLeft.days} label="dager" />
-            <span className="separator" aria-hidden="true">
-              :
-            </span>
-            <TimeUnit value={timeLeft.hours} label="timer" />
-            <span className="separator" aria-hidden="true">
-              :
-            </span>
-            <TimeUnit value={timeLeft.minutes} label="minutter" />
-            <span className="separator" aria-hidden="true">
-              :
-            </span>
-            <TimeUnit value={timeLeft.seconds} label="sekunder" />
-          </div>
-        )}
+            <VStack gap="space-4">
+              <div className="eyebrow">The Final Countdown</div>
+              <Heading id="countdown-title" level="1" size="xlarge">
+                31. desember 2028
+              </Heading>
+              <BodyLong className="intro">
+                Tiden som gjenstår til alle fagrutiner i Infotrygd skal være utfaset
+                og slått av
+              </BodyLong>
 
-        <div className="progress-line" aria-hidden="true">
-          <span />
-        </div>
-        <BodyLong className="date-note" size="small">
-          Søndag 31.12.2028 · kl. 23:59:59
-        </BodyLong>
-      </section>
+              {timeLeft.complete ? (
+                <Heading className="complete-message" level="2" size="large">
+                  Dagen er her!
+                </Heading>
+              ) : (
+                <div
+                  className="countdown"
+                  role="timer"
+                  aria-live="off"
+                  aria-label={`${timeLeft.days} dager, ${timeLeft.hours} timer, ${timeLeft.minutes} minutter og ${timeLeft.seconds} sekunder igjen`}
+                >
+                  <TimeUnit value={timeLeft.days} label="dager" />
+                  <span className="separator" aria-hidden="true">:</span>
+                  <TimeUnit value={timeLeft.hours} label="timer" />
+                  <span className="separator" aria-hidden="true">:</span>
+                  <TimeUnit value={timeLeft.minutes} label="minutter" />
+                  <span className="separator" aria-hidden="true">:</span>
+                  <TimeUnit value={timeLeft.seconds} label="sekunder" />
+                </div>
+              )}
+
+              <div className="progress-line" aria-hidden="true">
+                <span />
+              </div>
+              <BodyLong className="date-note" size="small">
+                Søndag 31.12.2028 · kl. 23:59:59
+              </BodyLong>
+            </VStack>
+          </Box>
+        </section>
+
+        <section aria-label="Status for utfasing">
+          <VStack gap="space-6">
+            <HGrid gap="space-6" columns={{ xs: 1, md: 2, lg: 3 }}>
+        <section aria-labelledby="closed-routines-title">
+          <Box
+            className="module routines-card"
+            background="surface-subtle"
+            padding={{ xs: "space-6", md: "space-8" }}
+            borderRadius="large"
+          >
+            <VStack gap="space-6">
+              <VStack className="routines-header" gap="space-2">
+                <Heading id="closed-routines-title" level="2" size="medium">
+                  Rutiner som er stengt i Infotrygd
+                </Heading>
+              </VStack>
+
+              <ul className="routine-list">
+                <li>
+                  <BodyShort weight="semibold">
+                    Tidsbegrenset uføre, rehabiliteringspenger og attføring
+                  </BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4. kvartal 2022 av Team Historisk.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Pensjonsrutinen</BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 1. kvartal 2023 av Team Historisk.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Regnskapsrutinen</BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4. kvartal 2023 av Team Historisk.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Enslig forsørger</BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4. kvartal 2025 av Team EFterlatte.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Kontantstøtte</BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 3. kvartal 2026 av Team BAKS.
+                  </BodyShort>
+                </li>
+              </ul>
+            </VStack>
+          </Box>
+        </section>
+
+        <section aria-labelledby="next-routine-title">
+          <Box
+            className="module next-routine-card"
+            background="surface-subtle"
+            padding={{ xs: "space-6", md: "space-8" }}
+            borderRadius="large"
+          >
+            <VStack gap="space-6">
+              <div className="routines-header">
+                <Heading id="next-routine-title" level="2" size="medium">
+                  Hvilken rutine kan vi slå av neste gang?
+                </Heading>
+              </div>
+              <ul className="active-routine-list">
+                <li>
+                  <BodyShort weight="semibold">Barnetrygd</BodyShort>
+                  <BodyShort size="small">
+                    Kun 3 løpende saker og 29 åpne saker igjen.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Foreldrepenger</BodyShort>
+                  <BodyShort size="small">
+                    0 løpende saker og 18 åpne saker.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Sykdom i familien</BodyShort>
+                  <BodyShort size="small">
+                    0 løpende saker og 18 åpne saker igjen.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Medlemskap</BodyShort>
+                  <BodyShort size="small">
+                    0 løpende saker og 77 åpne saker.
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Supplerende stønad</BodyShort>
+                  <BodyShort size="small">
+                    0 løpende saker og 98 åpne saker.
+                  </BodyShort>
+                </li>
+              </ul>
+            </VStack>
+          </Box>
+        </section>
+
+        <section aria-labelledby="idle-routines-title">
+          <Box
+            className="module idle-routines-card"
+            background="surface-subtle"
+            padding={{ xs: "space-6", md: "space-8" }}
+            borderRadius="large"
+          >
+            <VStack gap="space-6">
+              <div className="routines-header">
+                <Heading id="idle-routines-title" level="2" size="medium">
+                  Rutiner hvor utfasing ikke er i gang, eller det gjenstår mye før vi kan skru av
+                </Heading>
+              </div>
+              <ul className="idle-routine-list">
+                <li className="in-progress">
+                  <BodyShort weight="semibold">Sykepenger</BodyShort>
+                </li>
+                <li className="in-progress">
+                  <BodyShort weight="semibold">Yrkesskade</BodyShort>
+                </li>
+                <li><BodyShort weight="semibold">Forsikringsordninger</BodyShort></li>
+                <li>
+                  <BodyShort weight="semibold">
+                    Gravferdsstønad og båretransport
+                  </BodyShort>
+                </li>
+                <li>
+                  <BodyShort weight="semibold">Grunn- og hjelpestønad</BodyShort>
+                </li>
+                <li><BodyShort weight="semibold">Helsetjenester</BodyShort></li>
+                <li><BodyShort weight="semibold">Hjelpemidler</BodyShort></li>
+              </ul>
+            </VStack>
+          </Box>
+        </section>
+            </HGrid>
+          </VStack>
+        </section>
+      </VStack>
     </main>
   );
 }
