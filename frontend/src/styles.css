@@ -1,7 +1,7 @@
 :root {
   font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
-  color: #f7f7f7;
-  background: #00243a;
+  color: #262626;
+  background: #f7f7f7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -17,59 +17,51 @@ body {
 }
 
 main {
-  position: relative;
-  display: grid;
   min-height: 100vh;
-  place-items: center;
-  overflow: hidden;
-  padding: 2rem;
-  background:
-    linear-gradient(rgba(0, 36, 58, 0.86), rgba(0, 36, 58, 0.96)),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 79px,
-      rgba(255, 255, 255, 0.04) 80px
-    );
+  padding: clamp(1rem, 4vw, 3rem);
+  background: #f7f7f7;
 }
 
-.glow {
-  position: absolute;
-  width: 30rem;
-  height: 30rem;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.32;
-  pointer-events: none;
+.dashboard {
+  width: min(100%, 80rem);
+  margin: 0 auto;
 }
 
-.glow-one {
-  top: -12rem;
-  right: -8rem;
-  background: #66cbec;
-}
-
-.glow-two {
-  bottom: -18rem;
-  left: -10rem;
-  background: #ffb8b8;
+.module {
+  height: 100%;
+  border: 1px solid #c6c2bf;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
 }
 
 .countdown-card {
-  position: relative;
-  width: min(100%, 70rem);
-  padding: clamp(2rem, 6vw, 5rem);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 1.5rem;
-  background: rgba(0, 52, 83, 0.72);
-  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.28);
+  border-top: 0.25rem solid #0067c5;
+  background: #fff;
   text-align: center;
-  backdrop-filter: blur(18px);
+}
+
+.routines-card {
+  border-top: 0.25rem solid #3e8635;
+  background: #fff;
+  color: #262626;
+  min-height: 31rem;
+}
+
+.next-routine-card {
+  border-top: 0.25rem solid #0067c5;
+  background: #fff;
+  color: #262626;
+  min-height: 31rem;
+}
+
+.idle-routines-card {
+  border-top: 0.25rem solid #78706a;
+  background: #fff;
+  color: #262626;
+  min-height: 31rem;
 }
 
 .eyebrow {
-  margin-bottom: 0.75rem;
-  color: #99deff;
+  color: #0067c5;
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -77,14 +69,14 @@ main {
 }
 
 #countdown-title {
-  color: #fff;
+  color: #262626;
   font-size: clamp(2rem, 5vw, 4rem);
   letter-spacing: -0.025em;
+  text-shadow: none;
 }
 
 .intro {
-  margin: 1rem auto 0;
-  color: #cce2ed;
+  color: #5c5652;
 }
 
 .countdown {
@@ -92,7 +84,7 @@ main {
   grid-template-columns: 1.35fr auto 1fr auto 1fr auto 1fr;
   align-items: start;
   gap: clamp(0.35rem, 2vw, 1.5rem);
-  margin: clamp(2.5rem, 7vw, 5.5rem) auto;
+  margin: clamp(1.5rem, 5vw, 4rem) auto;
 }
 
 .time-unit {
@@ -103,9 +95,9 @@ main {
 }
 
 .time-value {
-  color: #fff;
+  color: #262626;
   font-family: ui-monospace, "Cascadia Mono", "Courier New", monospace;
-  font-size: clamp(2.8rem, 10vw, 7.5rem);
+  font-size: clamp(2.2rem, 4vw, 4rem);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.08em;
@@ -113,7 +105,7 @@ main {
 }
 
 .time-label {
-  color: #99deff;
+  color: #0067c5;
   font-size: clamp(0.75rem, 1.6vw, 1rem);
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -121,9 +113,9 @@ main {
 }
 
 .separator {
-  color: #ffb8b8;
+  color: #0067c5;
   font-family: ui-monospace, "Cascadia Mono", "Courier New", monospace;
-  font-size: clamp(2.5rem, 8vw, 6.5rem);
+  font-size: clamp(1.8rem, 2.75vw, 3.25rem);
   line-height: 0.8;
   animation: pulse 1s steps(1) infinite;
 }
@@ -132,24 +124,139 @@ main {
   height: 2px;
   overflow: hidden;
   border-radius: 1px;
-  background: rgba(255, 255, 255, 0.15);
+  background: #e5e2e0;
 }
 
 .progress-line span {
   display: block;
   width: 32%;
   height: 100%;
-  background: #66cbec;
+  background: #0067c5;
 }
 
 .date-note {
-  margin-top: 1.25rem;
-  color: #99b6c5;
+  color: #5c5652;
 }
 
 .complete-message {
-  margin: 4rem 0;
-  color: #fff;
+  margin: 3rem 0;
+  color: #262626;
+}
+
+.routine-list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.routines-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #d9d6d3;
+}
+
+.routine-list li {
+  position: relative;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  border-bottom: 1px solid #e5e2e0;
+}
+
+.routine-list li::before {
+  position: absolute;
+  top: -0.1rem;
+  left: 0;
+  color: #3e8635;
+  content: "✓";
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: none;
+}
+
+.routine-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.routine-list .navds-body-short:last-child {
+  margin-top: 0.25rem;
+  color: #5c5652;
+}
+
+.active-routine-list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.active-routine-list li {
+  position: relative;
+  padding-bottom: 1rem;
+  padding-left: 2.2rem;
+  border-bottom: 1px solid #e5e2e0;
+}
+
+.active-routine-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.active-routine-list li::before {
+  position: absolute;
+  top: -0.25rem;
+  left: 0;
+  color: #0067c5;
+  content: "⚙";
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: none;
+}
+
+.active-routine-list .navds-body-short:last-child {
+  margin-top: 0.15rem;
+  color: #5c5652;
+}
+
+.idle-routine-list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.idle-routine-list li {
+  position: relative;
+  padding-bottom: 1rem;
+  padding-left: 2.2rem;
+  border-bottom: 1px solid #e5e2e0;
+}
+
+.idle-routine-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.idle-routine-list li::before {
+  position: absolute;
+  top: -0.1rem;
+  left: 0;
+  color: #78706a;
+  content: "⏸";
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.idle-routine-list li.in-progress::before {
+  color: #0067c5;
+  content: "↗";
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 @keyframes pulse {
@@ -161,11 +268,6 @@ main {
 @media (max-width: 600px) {
   main {
     padding: 1rem;
-  }
-
-  .countdown-card {
-    padding: 2.5rem 1rem;
-    border-radius: 1rem;
   }
 
   .countdown {
@@ -180,5 +282,9 @@ main {
 @media (prefers-reduced-motion: reduce) {
   .separator {
     animation: none;
+  }
+
+  .module {
+    transition: none;
   }
 }
