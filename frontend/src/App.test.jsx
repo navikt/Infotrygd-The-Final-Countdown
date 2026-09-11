@@ -43,6 +43,7 @@ describe('App', () => {
     expect(screen.getByText('Forsikringsordninger')).toBeTruthy()
     expect(screen.getByText('Gravferdsstønad og båretransport')).toBeTruthy()
     expect(screen.getByText('Grunn- og hjelpestønad')).toBeTruthy()
+    expect(screen.getByText('Gjenlevende')).toBeTruthy()
     expect(screen.getByText('Helsetjenester')).toBeTruthy()
     expect(screen.getByText('Hjelpemidler')).toBeTruthy()
   })
