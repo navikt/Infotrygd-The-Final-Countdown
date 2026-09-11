@@ -145,7 +145,7 @@ export default function App() {
                   <StatusCircle status="success" />
                   <BodyShort weight="semibold">Enslig forsørger</BodyShort>
                   <BodyShort size="small">
-                    Skrudd av i 4. kvartal 2025 av Team EFterlatte.
+                    Skrudd av i 4. kvartal 2024 av Team EFterlatte.
                   </BodyShort>
                 </li>
                 <li>
