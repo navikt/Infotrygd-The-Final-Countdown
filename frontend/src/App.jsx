@@ -51,15 +51,15 @@ export default function App() {
 
   return (
     <main>
-      <VStack className="dashboard" gap={{ xs: "space-6", md: "space-8" }}>
+      <VStack className="dashboard" gap="space-4">
         <section aria-labelledby="countdown-title">
           <Box
             className="module countdown-card"
             background="surface-default"
-            padding={{ xs: "space-6", md: "space-8" }}
+            padding={{ xs: "space-4", md: "space-6" }}
             borderRadius="large"
           >
-            <VStack gap="space-4">
+            <VStack gap="space-2">
               <div className="eyebrow">The Final Countdown</div>
               <Heading id="countdown-title" level="1" size="xlarge">
                 31. desember 2028
@@ -101,16 +101,16 @@ export default function App() {
         </section>
 
         <section aria-label="Status for utfasing">
-          <VStack gap="space-6">
-            <HGrid gap="space-6" columns={{ xs: 1, md: 2, lg: 3 }}>
+          <VStack gap="space-4">
+            <HGrid gap="space-4" columns={{ xs: 1, md: 2, lg: 3 }}>
         <section aria-labelledby="closed-routines-title">
           <Box
             className="module routines-card"
             background="surface-subtle"
-            padding={{ xs: "space-6", md: "space-8" }}
+            padding={{ xs: "space-4", md: "space-6" }}
             borderRadius="large"
           >
-            <VStack gap="space-6">
+            <VStack gap="space-4">
               <VStack className="routines-header" gap="space-2">
                 <Heading id="closed-routines-title" level="2" size="medium">
                   Tipp topp! Allerede stengt
@@ -164,10 +164,10 @@ export default function App() {
           <Box
             className="module next-routine-card"
             background="surface-subtle"
-            padding={{ xs: "space-6", md: "space-8" }}
+            padding={{ xs: "space-4", md: "space-6" }}
             borderRadius="large"
           >
-            <VStack gap="space-6">
+            <VStack gap="space-4">
               <div className="routines-header">
                 <Heading id="next-routine-title" level="2" size="medium">
                   Hvem blir den neste?
@@ -218,10 +218,10 @@ export default function App() {
           <Box
             className="module idle-routines-card"
             background="surface-subtle"
-            padding={{ xs: "space-6", md: "space-8" }}
+            padding={{ xs: "space-4", md: "space-6" }}
             borderRadius="large"
           >
-            <VStack gap="space-6">
+            <VStack gap="space-4">
               <div className="routines-header">
                 <Heading id="idle-routines-title" level="2" size="medium">
                   Her er det møe ærbe, færr!
