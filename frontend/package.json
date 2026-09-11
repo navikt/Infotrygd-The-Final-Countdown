@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@navikt/aksel-icons": "^7.31.0",
     "@navikt/ds-css": "^7.31.0",
     "@navikt/ds-react": "^7.31.0",
     "react": "^19.1.1",

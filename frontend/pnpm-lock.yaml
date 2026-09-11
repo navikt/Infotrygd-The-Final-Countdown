@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@navikt/aksel-icons':
+        specifier: ^7.31.0
+        version: 7.31.0
       '@navikt/ds-css':
         specifier: ^7.31.0
         version: 7.40.0
@@ -388,6 +391,9 @@ packages:
     cpu: [x64]
     os: [linux]
     libc: [glibc]
+
+  '@navikt/aksel-icons@7.31.0':
+    resolution: {integrity: sha512-6rtyFhDDBOkyG815trxe9pnaJrvSnwLEpkJ7qh0qZm1B8g59a4bf2IJGVtKDPg9thVOrxNtA/H9G4N6n0v9Kkg==}
 
   '@navikt/aksel-icons@7.40.0':
     resolution: {integrity: sha512-1xuhplMhKCEPn2iMFypMVgkRNxUd5iupQ7HP2itdQCkK3K2mm2b8HsDwL9d7YDWcxowq5ff7ewpKgQFPn6o1UQ==}
@@ -1349,6 +1355,8 @@ snapshots:
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
+
+  '@navikt/aksel-icons@7.31.0': {}
 
   '@navikt/aksel-icons@7.40.0': {}
 

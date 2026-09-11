@@ -15,7 +15,7 @@ describe('App', () => {
   it('renders the closed Infotrygd routines', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: /rutiner som er stengt/i })).toBeTruthy()
+    expect(screen.getByRole('heading', { name: /tipp topp! allerede stengt/i })).toBeTruthy()
     expect(screen.getByText(/tidsbegrenset uføre, rehabiliteringspenger og attføring/i)).toBeTruthy()
     expect(screen.getByText('Pensjonsrutinen')).toBeTruthy()
     expect(screen.getByText('Regnskapsrutinen')).toBeTruthy()
@@ -27,7 +27,7 @@ describe('App', () => {
     render(<App />)
 
     expect(
-      screen.getByRole('heading', { name: /hvilken rutine kan vi slå av neste gang/i }),
+      screen.getByRole('heading', { name: /hvem blir den neste\?/i }),
     ).toBeTruthy()
     expect(screen.getByText('Barnetrygd')).toBeTruthy()
     expect(screen.getByText('Foreldrepenger')).toBeTruthy()
@@ -38,11 +38,12 @@ describe('App', () => {
     render(<App />)
 
     expect(
-      screen.getByRole('heading', { name: /rutiner hvor utfasing ikke er i gang/i }),
+      screen.getByRole('heading', { name: /her er det møe ærbe, færr!/i }),
     ).toBeTruthy()
     expect(screen.getByText('Forsikringsordninger')).toBeTruthy()
     expect(screen.getByText('Gravferdsstønad og båretransport')).toBeTruthy()
     expect(screen.getByText('Grunn- og hjelpestønad')).toBeTruthy()
+    expect(screen.getByText('Gjenlevende')).toBeTruthy()
     expect(screen.getByText('Helsetjenester')).toBeTruthy()
     expect(screen.getByText('Hjelpemidler')).toBeTruthy()
   })

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BodyLong, BodyShort, Box, HGrid, Heading, VStack } from "@navikt/ds-react";
+import { CircleFillIcon } from "@navikt/aksel-icons";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
 const SECOND = 1_000;
@@ -25,6 +26,15 @@ function TimeUnit({ value, label }) {
       <span className="time-value">{String(value).padStart(2, "0")}</span>
       <span className="time-label">{label}</span>
     </div>
+  );
+}
+
+function StatusCircle({ status }) {
+  return (
+    <CircleFillIcon
+      className={`status-circle status-circle--${status}`}
+      aria-hidden="true"
+    />
   );
 }
 
@@ -103,12 +113,13 @@ export default function App() {
             <VStack gap="space-6">
               <VStack className="routines-header" gap="space-2">
                 <Heading id="closed-routines-title" level="2" size="medium">
-                  Rutiner som er stengt i Infotrygd
+                  Tipp topp! Allerede stengt
                 </Heading>
               </VStack>
 
               <ul className="routine-list">
                 <li>
+                  <StatusCircle status="success" />
                   <BodyShort weight="semibold">
                     Tidsbegrenset uføre, rehabiliteringspenger og attføring
                   </BodyShort>
@@ -117,24 +128,28 @@ export default function App() {
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="success" />
                   <BodyShort weight="semibold">Pensjonsrutinen</BodyShort>
                   <BodyShort size="small">
                     Skrudd av i 1. kvartal 2023 av Team Historisk.
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="success" />
                   <BodyShort weight="semibold">Regnskapsrutinen</BodyShort>
                   <BodyShort size="small">
                     Skrudd av i 4. kvartal 2023 av Team Historisk.
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="success" />
                   <BodyShort weight="semibold">Enslig forsørger</BodyShort>
                   <BodyShort size="small">
                     Skrudd av i 4. kvartal 2025 av Team EFterlatte.
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="success" />
                   <BodyShort weight="semibold">Kontantstøtte</BodyShort>
                   <BodyShort size="small">
                     Skrudd av i 3. kvartal 2026 av Team BAKS.
@@ -155,35 +170,40 @@ export default function App() {
             <VStack gap="space-6">
               <div className="routines-header">
                 <Heading id="next-routine-title" level="2" size="medium">
-                  Hvilken rutine kan vi slå av neste gang?
+                  Hvem blir den neste?
                 </Heading>
               </div>
               <ul className="active-routine-list">
                 <li>
+                  <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Barnetrygd</BodyShort>
                   <BodyShort size="small">
                     Kun 3 løpende saker og 29 åpne saker igjen.
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Foreldrepenger</BodyShort>
                   <BodyShort size="small">
                     0 løpende saker og 18 åpne saker.
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Sykdom i familien</BodyShort>
                   <BodyShort size="small">
                     0 løpende saker og 18 åpne saker igjen.
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Medlemskap</BodyShort>
                   <BodyShort size="small">
                     0 løpende saker og 77 åpne saker.
                   </BodyShort>
                 </li>
                 <li>
+                  <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Supplerende stønad</BodyShort>
                   <BodyShort size="small">
                     0 løpende saker og 98 åpne saker.
@@ -204,27 +224,71 @@ export default function App() {
             <VStack gap="space-6">
               <div className="routines-header">
                 <Heading id="idle-routines-title" level="2" size="medium">
-                  Rutiner hvor utfasing ikke er i gang, eller det gjenstår mye før vi kan skru av
+                  Her er det møe ærbe, færr!
                 </Heading>
+                <BodyShort size="small">
+                  (Rettskriving av Ulefossnormen)
+                </BodyShort>
               </div>
               <ul className="idle-routine-list">
                 <li className="in-progress">
+                  <StatusCircle status="warning" />
                   <BodyShort weight="semibold">Sykepenger</BodyShort>
+                  <BodyShort size="small">
+                    Utfasing pågår, fremdeles mye igjen.
+                  </BodyShort>
                 </li>
                 <li className="in-progress">
+                  <StatusCircle status="warning" />
                   <BodyShort weight="semibold">Yrkesskade</BodyShort>
-                </li>
-                <li><BodyShort weight="semibold">Forsikringsordninger</BodyShort></li>
-                <li>
-                  <BodyShort weight="semibold">
-                    Gravferdsstønad og båretransport
+                  <BodyShort size="small">
+                    Utfasing pågår, fremdeles noe igjen.
                   </BodyShort>
                 </li>
                 <li>
-                  <BodyShort weight="semibold">Grunn- og hjelpestønad</BodyShort>
+                  <StatusCircle status="danger" />
+                  <BodyShort weight="semibold">Forsikringsordninger</BodyShort>
+                  <BodyShort size="small">
+                    Ikke påbegynt!
+                  </BodyShort>
                 </li>
-                <li><BodyShort weight="semibold">Helsetjenester</BodyShort></li>
-                <li><BodyShort weight="semibold">Hjelpemidler</BodyShort></li>
+                <li>
+                  <StatusCircle status="danger" />
+                  <BodyShort weight="semibold">
+                    Gravferdsstønad og båretransport
+                  </BodyShort>
+                  <BodyShort size="small">
+                    Ikke påbegynt!
+                  </BodyShort>
+                </li>
+                <li>
+                  <StatusCircle status="danger" />
+                  <BodyShort weight="semibold">Grunn- og hjelpestønad</BodyShort>
+                  <BodyShort size="small">
+                    Ikke påbegynt!
+                  </BodyShort>
+                </li>
+                <li>
+                  <StatusCircle status="danger" />
+                  <BodyShort weight="semibold">Gjenlevende</BodyShort>
+                  <BodyShort size="small">
+                    Påbegynt, men stoppet!
+                  </BodyShort>
+                </li>
+                <li>
+                  <StatusCircle status="danger" />
+                  <BodyShort weight="semibold">Helsetjenester</BodyShort>
+                  <BodyShort size="small">
+                    Påbegynt, men stoppet!
+                  </BodyShort>
+                </li>
+                <li>
+                  <StatusCircle status="danger" />
+                  <BodyShort weight="semibold">Hjelpemidler</BodyShort>
+                  <BodyShort size="small">
+                     Påbegynt, men stoppet!
+                  </BodyShort>
+                </li>
               </ul>
             </VStack>
           </Box>

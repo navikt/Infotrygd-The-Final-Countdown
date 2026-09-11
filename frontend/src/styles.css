@@ -47,14 +47,14 @@ main {
 }
 
 .next-routine-card {
-  border-top: 0.25rem solid #0067c5;
+  border-top: 0.25rem solid var(--a-orange-200);
   background: #fff;
   color: #262626;
   min-height: 31rem;
 }
 
 .idle-routines-card {
-  border-top: 0.25rem solid #78706a;
+  border-top: 0.25rem solid var(--a-icon-danger);
   background: #fff;
   color: #262626;
   min-height: 31rem;
@@ -163,18 +163,6 @@ main {
   border-bottom: 1px solid #e5e2e0;
 }
 
-.routine-list li::before {
-  position: absolute;
-  top: -0.1rem;
-  left: 0;
-  color: #3e8635;
-  content: "✓";
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 1;
-  text-shadow: none;
-}
-
 .routine-list li:last-child {
   padding-bottom: 0;
   border-bottom: 0;
@@ -205,18 +193,6 @@ main {
   border-bottom: 0;
 }
 
-.active-routine-list li::before {
-  position: absolute;
-  top: -0.25rem;
-  left: 0;
-  color: #0067c5;
-  content: "⚙";
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-  text-shadow: none;
-}
-
 .active-routine-list .navds-body-short:last-child {
   margin-top: 0.15rem;
   color: #5c5652;
@@ -238,25 +214,32 @@ main {
 }
 
 .idle-routine-list li:last-child {
-  padding-bottom: 0;
+  padding-bottom: 0.75rem;
   border-bottom: 0;
 }
 
-.idle-routine-list li::before {
+.status-circle {
   position: absolute;
-  top: -0.1rem;
+  top: 0.1rem;
   left: 0;
-  color: #78706a;
-  content: "⏸";
-  font-size: 1.5rem;
-  line-height: 1;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
-.idle-routine-list li.in-progress::before {
-  color: #0067c5;
-  content: "↗";
-  font-size: 1.8rem;
-  font-weight: 700;
+.status-circle--warning {
+  color: var(--a-orange-500);
+}
+
+.status-circle--almost-ready {
+  color: var(--a-orange-200);
+}
+
+.status-circle--success {
+  color: var(--a-icon-success);
+}
+
+.status-circle--danger {
+  color: var(--a-icon-danger);
 }
 
 @keyframes pulse {
