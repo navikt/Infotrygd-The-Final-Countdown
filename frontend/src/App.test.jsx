@@ -27,7 +27,7 @@ describe('App', () => {
     render(<App />)
 
     expect(
-      screen.getByRole('heading', { name: /hvem blir den neste/i }),
+      screen.getByRole('heading', { name: /hvem blir den neste\?/i }),
     ).toBeTruthy()
     expect(screen.getByText('Barnetrygd')).toBeTruthy()
     expect(screen.getByText('Foreldrepenger')).toBeTruthy()
@@ -38,7 +38,7 @@ describe('App', () => {
     render(<App />)
 
     expect(
-      screen.getByRole('heading', { name: /her er det møe ærbe, færr/i }),
+      screen.getByRole('heading', { name: /her er det møe ærbe, færr!/i }),
     ).toBeTruthy()
     expect(screen.getByText('Forsikringsordninger')).toBeTruthy()
     expect(screen.getByText('Gravferdsstønad og båretransport')).toBeTruthy()
