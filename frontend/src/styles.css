@@ -57,6 +57,47 @@ main {
   color: #262626;
 }
 
+.achievement-card {
+  display: grid;
+  min-height: clamp(8rem, 10vw, 10rem);
+  place-items: center;
+  border-top: 0.25rem solid var(--a-icon-success);
+  background: #fff;
+  color: #262626;
+}
+
+.achievement-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.achievement-icon {
+  flex: 0 0 auto;
+  color: var(--a-icon-success);
+  font-size: 2rem;
+}
+
+.achievement-countup {
+  display: grid;
+  grid-template-columns: minmax(4rem, 1fr) auto minmax(4rem, 1fr) auto minmax(4rem, 1fr);
+  align-items: start;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  text-align: center;
+}
+
+.achievement-countup .time-unit {
+  gap: 0.4rem;
+}
+
+.achievement-countup .time-value {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
 .eyebrow {
   color: #0067c5;
   font-size: 0.875rem;
