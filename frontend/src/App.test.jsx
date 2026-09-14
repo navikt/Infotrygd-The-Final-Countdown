@@ -47,4 +47,17 @@ describe('App', () => {
     expect(screen.getByText('Helsetjenester')).toBeTruthy()
     expect(screen.getByText('Hjelpemidler')).toBeTruthy()
   })
+
+  it('renders the Team BAKS achievement', () => {
+    render(<App />)
+
+    expect(
+      screen.getByText('Tid siden Team BAKS skrudde av kontantstøtte (1. august 2026):'),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('timer', {
+        name: /dager, \d+ timer og \d+ minutter siden kontantstøtte ble skrudd av/i,
+      }),
+    ).toBeTruthy()
+  })
 })

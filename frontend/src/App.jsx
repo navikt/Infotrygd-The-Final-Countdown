@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BodyLong, BodyShort, Box, HGrid, Heading, VStack } from "@navikt/ds-react";
-import { CircleFillIcon } from "@navikt/aksel-icons";
+import { CircleFillIcon, StarFillIcon } from "@navikt/aksel-icons";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
+const BAKS_CLOSURE_TIME = new Date("2026-08-01T00:00:00+02:00").getTime();
 const SECOND = 1_000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
@@ -17,6 +18,16 @@ function getTimeLeft() {
     minutes: Math.floor((difference % HOUR) / MINUTE),
     seconds: Math.floor((difference % MINUTE) / SECOND),
     complete: difference === 0,
+  };
+}
+
+function getElapsedTime() {
+  const difference = Math.max(0, Date.now() - BAKS_CLOSURE_TIME);
+
+  return {
+    days: Math.floor(difference / DAY),
+    hours: Math.floor((difference % DAY) / HOUR),
+    minutes: Math.floor((difference % HOUR) / MINUTE),
   };
 }
 
@@ -40,6 +51,7 @@ function StatusCircle({ status }) {
 
 export default function App() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft);
+  const elapsedTime = getElapsedTime();
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -294,6 +306,34 @@ export default function App() {
           </Box>
         </section>
             </HGrid>
+            <section aria-label="Milepæl for utfasing">
+              <Box
+                className="module achievement-card"
+                background="surface-subtle"
+                padding={{ xs: "space-4", md: "space-6" }}
+                borderRadius="large"
+              >
+                <VStack gap="space-4" align="center">
+                  <BodyShort className="achievement-text" weight="semibold">
+                    <StarFillIcon className="achievement-icon" aria-hidden="true" />
+                    Tid siden Team BAKS skrudde av kontantstøtte (1. august 2026):
+                    <StarFillIcon className="achievement-icon" aria-hidden="true" />
+                  </BodyShort>
+                  <div
+                    className="achievement-countup"
+                    role="timer"
+                    aria-live="off"
+                    aria-label={`${elapsedTime.days} dager, ${elapsedTime.hours} timer og ${elapsedTime.minutes} minutter siden kontantstøtte ble skrudd av`}
+                  >
+                    <TimeUnit value={elapsedTime.days} label="dager" />
+                    <span className="separator" aria-hidden="true">:</span>
+                    <TimeUnit value={elapsedTime.hours} label="timer" />
+                    <span className="separator" aria-hidden="true">:</span>
+                    <TimeUnit value={elapsedTime.minutes} label="minutter" />
+                  </div>
+                </VStack>
+              </Box>
+            </section>
           </VStack>
         </section>
       </VStack>
