@@ -46,13 +46,13 @@ main {
 }
 
 .next-routine-card {
-  border-top: 0.25rem solid var(--a-orange-200);
+  border-top: 0.25rem solid var(--ax-warning-300);
   background: #fff;
   color: #262626;
 }
 
 .idle-routines-card {
-  border-top: 0.25rem solid var(--a-icon-danger);
+  border-top: 0.25rem solid var(--ax-text-danger-decoration);
   background: #fff;
   color: #262626;
 }
@@ -61,7 +61,7 @@ main {
   display: grid;
   min-height: clamp(8rem, 10vw, 10rem);
   place-items: center;
-  border-top: 0.25rem solid var(--a-icon-success);
+  border-top: 0.25rem solid var(--ax-text-success-decoration);
   background: #fff;
   color: #262626;
 }
@@ -77,7 +77,7 @@ main {
 
 .achievement-icon {
   flex: 0 0 auto;
-  color: var(--a-icon-success);
+  color: var(--ax-text-success-decoration);
   font-size: 2rem;
 }
 
@@ -265,19 +265,19 @@ main {
 }
 
 .status-circle--warning {
-  color: var(--a-orange-500);
+  color: var(--ax-warning-600);
 }
 
 .status-circle--almost-ready {
-  color: var(--a-orange-200);
+  color: var(--ax-warning-300);
 }
 
 .status-circle--success {
-  color: var(--a-icon-success);
+  color: var(--ax-text-success-decoration);
 }
 
 .status-circle--danger {
-  color: var(--a-icon-danger);
+  color: var(--ax-text-danger-decoration);
 }
 
 @keyframes pulse {
