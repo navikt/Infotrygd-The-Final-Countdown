@@ -3,7 +3,7 @@ import { BodyLong, BodyShort, Box, HGrid, Heading, VStack } from "@navikt/ds-rea
 import { CircleFillIcon, StarFillIcon } from "@navikt/aksel-icons";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
-const BAKS_CLOSURE_TIME = new Date("2026-08-01T00:00:00+02:00").getTime();
+const BAKS_CLOSURE_TIME = new Date("2026-09-01T00:00:00+02:00").getTime();
 const SECOND = 1_000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
@@ -133,7 +133,25 @@ export default function App() {
                 <li>
                   <StatusCircle status="success" />
                   <BodyShort weight="semibold">
-                    Tidsbegrenset uføre, rehabiliteringspenger og attføring
+                    Tidsbegrenset uføre
+                  </BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4. kvartal 2022 av Team Historisk.
+                  </BodyShort>
+                </li>
+                <li>
+                  <StatusCircle status="success" />
+                  <BodyShort weight="semibold">
+                    Rehabiliteringspenger
+                  </BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4. kvartal 2022 av Team Historisk.
+                  </BodyShort>
+                </li>
+                <li>
+                  <StatusCircle status="success" />
+                  <BodyShort weight="semibold">
+                    Attføring
                   </BodyShort>
                   <BodyShort size="small">
                     Skrudd av i 4. kvartal 2022 av Team Historisk.
@@ -204,7 +222,7 @@ export default function App() {
                   <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Sykdom i familien</BodyShort>
                   <BodyShort size="small">
-                    0 løpende saker og 18 åpne saker igjen.
+                    0 løpende saker og 2 åpne saker igjen.
                   </BodyShort>
                 </li>
                 <li>
@@ -245,16 +263,23 @@ export default function App() {
               <ul className="idle-routine-list">
                 <li className="in-progress">
                   <StatusCircle status="warning" />
+                  <BodyShort weight="semibold">Yrkesskade</BodyShort>
+                  <BodyShort size="small">
+                    Utfasing pågår, fremdeles noe igjen.
+                  </BodyShort>
+                </li>
+                <li className="in-progress">
+                  <StatusCircle status="warning" />
                   <BodyShort weight="semibold">Sykepenger</BodyShort>
                   <BodyShort size="small">
                     Utfasing pågår, fremdeles mye igjen.
                   </BodyShort>
                 </li>
-                <li className="in-progress">
+                <li>
                   <StatusCircle status="warning" />
-                  <BodyShort weight="semibold">Yrkesskade</BodyShort>
+                  <BodyShort weight="semibold">Hjelpemidler</BodyShort>
                   <BodyShort size="small">
-                    Utfasing pågår, fremdeles noe igjen.
+                    Utfasing pågår, fremdeles mye igjen.
                   </BodyShort>
                 </li>
                 <li>
@@ -294,13 +319,6 @@ export default function App() {
                     Påbegynt, men stoppet!
                   </BodyShort>
                 </li>
-                <li>
-                  <StatusCircle status="danger" />
-                  <BodyShort weight="semibold">Hjelpemidler</BodyShort>
-                  <BodyShort size="small">
-                     Påbegynt, men stoppet!
-                  </BodyShort>
-                </li>
               </ul>
             </VStack>
           </Box>
@@ -316,7 +334,7 @@ export default function App() {
                 <VStack gap="space-4" align="center">
                   <BodyShort className="achievement-text" weight="semibold">
                     <StarFillIcon className="achievement-icon" aria-hidden="true" />
-                    Tid siden Team BAKS skrudde av kontantstøtte (1. august 2026):
+                    Tid siden Team BAKS skrudde av kontantstøtte (1. september 2026):
                     <StarFillIcon className="achievement-icon" aria-hidden="true" />
                   </BodyShort>
                   <div

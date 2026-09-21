@@ -16,7 +16,9 @@ describe('App', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { name: /tipp topp! allerede stengt/i })).toBeTruthy()
-    expect(screen.getByText(/tidsbegrenset uføre, rehabiliteringspenger og attføring/i)).toBeTruthy()
+    expect(screen.getByText('Tidsbegrenset uføre')).toBeTruthy()
+    expect(screen.getByText('Rehabiliteringspenger')).toBeTruthy()
+    expect(screen.getByText('Attføring')).toBeTruthy()
     expect(screen.getByText('Pensjonsrutinen')).toBeTruthy()
     expect(screen.getByText('Regnskapsrutinen')).toBeTruthy()
     expect(screen.getByText('Enslig forsørger')).toBeTruthy()
@@ -52,7 +54,7 @@ describe('App', () => {
     render(<App />)
 
     expect(
-      screen.getByText('Tid siden Team BAKS skrudde av kontantstøtte (1. august 2026):'),
+      screen.getByText('Tid siden Team BAKS skrudde av kontantstøtte (1. september 2026):'),
     ).toBeTruthy()
     expect(
       screen.getByRole('timer', {

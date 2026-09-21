@@ -6,6 +6,10 @@
   text-rendering: optimizeLegibility;
 }
 
+html {
+  font-size: 95%;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -167,7 +171,7 @@ main {
 
 .progress-line span {
   display: block;
-  width: 32%;
+  width: 100%;
   height: 100%;
   background: #0067c5;
 }
@@ -265,7 +269,7 @@ main {
 }
 
 .status-circle--warning {
-  color: var(--ax-warning-600);
+  color: var(--ax-warning-500);
 }
 
 .status-circle--almost-ready {
@@ -277,7 +281,7 @@ main {
 }
 
 .status-circle--danger {
-  color: var(--ax-text-danger-decoration);
+  color: var(--ax-danger-700);
 }
 
 @keyframes pulse {
