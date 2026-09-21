@@ -52,7 +52,7 @@ describe('App', () => {
     render(<App />)
 
     expect(
-      screen.getByText('Tid siden Team BAKS skrudde av kontantstøtte (1. august 2026):'),
+      screen.getByText('Tid siden Team BAKS skrudde av kontantstøtte (1. september 2026):'),
     ).toBeTruthy()
     expect(
       screen.getByRole('timer', {
