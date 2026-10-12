@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@navikt/aksel-icons':
-        specifier: ^8.17.1
-        version: 8.17.1
+        specifier: ^8.18.0
+        version: 8.18.0
       '@navikt/ds-css':
         specifier: ^8.17.1
         version: 8.17.1
@@ -304,8 +304,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@navikt/aksel-icons@8.17.1':
-    resolution: {integrity: sha512-fJatgZFAe25xCpKcigqLLNvl+CHvSHzuIqmA+n0F8mdgsgO+Ue7o0Dr9EfDTaX35aA2ZMxZhaJqmZRAZAnClzw==}
+  '@navikt/aksel-icons@8.18.0':
+    resolution: {integrity: sha512-pN15b6dQxDiPdJbXcL7W9xJ0sPUHo5GKM5ltAQ8kLb3Mf5is6Mf6gfON1nwft+aB8WlehDrTTseXVwu1BEfmQA==}
 
   '@navikt/ds-css@8.17.1':
     resolution: {integrity: sha512-z9yLK1nx4LJXqgLjzvi/Fa4Wzex5Uapi9H0Wgt4/S55HhFX8v+MZWCsSS0IYW3nOykV905UTDjFAKmB7xqL+ig==}
@@ -1076,7 +1076,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@navikt/aksel-icons@8.17.1': {}
+  '@navikt/aksel-icons@8.18.0': {}
 
   '@navikt/ds-css@8.17.1': {}
 
@@ -1084,7 +1084,7 @@ snapshots:
     dependencies:
       '@floating-ui/react': 0.27.20(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@navikt/aksel-icons': 8.17.1
+      '@navikt/aksel-icons': 8.18.0
       '@navikt/ds-tokens': 8.17.1
       date-fns: 4.4.0
       react: 19.3.0
