@@ -4,6 +4,8 @@ import { CircleFillIcon, StarFillIcon } from "@navikt/aksel-icons";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
 const BAKS_CLOSURE_TIME = new Date("2026-09-01T00:00:00+02:00").getTime();
+const FORELDREPENGER_CLOSURE_TIME = new Date("2026-10-14T07:27:00+02:00").getTime();
+const SYKDOM_I_FAMILIEN_CLOSURE_TIME = new Date("2026-10-15T07:22:00+02:00").getTime();
 const SECOND = 1_000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
@@ -21,13 +23,14 @@ function getTimeLeft() {
   };
 }
 
-function getElapsedTime() {
-  const difference = Math.max(0, Date.now() - BAKS_CLOSURE_TIME);
+function getElapsedTime(startTime) {
+  const difference = Math.max(0, Date.now() - startTime);
 
   return {
     days: Math.floor(difference / DAY),
     hours: Math.floor((difference % DAY) / HOUR),
     minutes: Math.floor((difference % HOUR) / MINUTE),
+    seconds: Math.floor((difference % MINUTE) / SECOND),
   };
 }
 
@@ -51,7 +54,9 @@ function StatusCircle({ status }) {
 
 export default function App() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft);
-  const elapsedTime = getElapsedTime();
+  const baksElapsedTime = getElapsedTime(BAKS_CLOSURE_TIME);
+  const foreldrepengerElapsedTime = getElapsedTime(FORELDREPENGER_CLOSURE_TIME);
+  const sykdomIFamilienElapsedTime = getElapsedTime(SYKDOM_I_FAMILIEN_CLOSURE_TIME);
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -185,6 +190,20 @@ export default function App() {
                     Skrudd av i 3. kvartal 2026 av Team BAKS.
                   </BodyShort>
                 </li>
+                <li>
+                  <StatusCircle status="success" />
+                  <BodyShort weight="semibold">Foreldrepenger</BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4.kvartal av Team Foreldrepenger
+                  </BodyShort>
+                </li>
+                <li>
+                  <StatusCircle status="success" />
+                  <BodyShort weight="semibold">Sykdom i familien</BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4.kvartal av Team Sykdom i familien
+                  </BodyShort>
+                </li>
               </ul>
             </VStack>
           </Box>
@@ -208,35 +227,21 @@ export default function App() {
                   <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Barnetrygd</BodyShort>
                   <BodyShort size="small">
-                    Kun 3 løpende saker og 29 åpne saker igjen.
-                  </BodyShort>
-                </li>
-                <li>
-                  <StatusCircle status="almost-ready" />
-                  <BodyShort weight="semibold">Foreldrepenger</BodyShort>
-                  <BodyShort size="small">
-                    0 løpende saker og 18 åpne saker.
-                  </BodyShort>
-                </li>
-                <li>
-                  <StatusCircle status="almost-ready" />
-                  <BodyShort weight="semibold">Sykdom i familien</BodyShort>
-                  <BodyShort size="small">
-                    0 løpende saker og 2 åpne saker igjen.
+                    Kun 1 løpende sak og 16 åpne saker igjen
                   </BodyShort>
                 </li>
                 <li>
                   <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Medlemskap</BodyShort>
                   <BodyShort size="small">
-                    0 løpende saker og 77 åpne saker.
+                    0 løpende saker og 70 åpne saker
                   </BodyShort>
                 </li>
                 <li>
                   <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Supplerende stønad</BodyShort>
                   <BodyShort size="small">
-                    0 løpende saker og 98 åpne saker.
+                    0 løpende saker og 83 åpne saker
                   </BodyShort>
                 </li>
               </ul>
@@ -341,16 +346,82 @@ export default function App() {
                     className="achievement-countup"
                     role="timer"
                     aria-live="off"
-                    aria-label={`${elapsedTime.days} dager, ${elapsedTime.hours} timer og ${elapsedTime.minutes} minutter siden kontantstøtte ble skrudd av`}
+                    aria-label={`${baksElapsedTime.days} dager, ${baksElapsedTime.hours} timer og ${baksElapsedTime.minutes} minutter siden kontantstøtte ble skrudd av`}
                   >
-                    <TimeUnit value={elapsedTime.days} label="dager" />
+                    <TimeUnit value={baksElapsedTime.days} label="dager" />
                     <span className="separator" aria-hidden="true">:</span>
-                    <TimeUnit value={elapsedTime.hours} label="timer" />
+                    <TimeUnit value={baksElapsedTime.hours} label="timer" />
                     <span className="separator" aria-hidden="true">:</span>
-                    <TimeUnit value={elapsedTime.minutes} label="minutter" />
+                    <TimeUnit value={baksElapsedTime.minutes} label="minutter" />
                   </div>
                 </VStack>
               </Box>
+            </section>
+            <section aria-label="Tid siden stenging">
+              <HGrid gap="space-4" columns={{ xs: 1, md: 2 }}>
+                <section aria-labelledby="foreldrepenger-closure-title">
+                  <Box
+                    className="module closure-countup-card"
+                    background="surface-subtle"
+                    padding={{ xs: "space-4", md: "space-6" }}
+                    borderRadius="large"
+                  >
+                    <VStack gap="space-4" align="center">
+                      <VStack gap="space-2" align="center">
+                        <Heading id="foreldrepenger-closure-title" level="2" size="medium">
+                          Tid siden Foreldrepenger ble stengt
+                        </Heading>
+                        <BodyShort size="small">14. oktober 2026 kl. 07:27</BodyShort>
+                      </VStack>
+                      <div
+                        className="closure-countup"
+                        role="timer"
+                        aria-live="off"
+                        aria-label={`${foreldrepengerElapsedTime.days} dager, ${foreldrepengerElapsedTime.hours} timer, ${foreldrepengerElapsedTime.minutes} minutter og ${foreldrepengerElapsedTime.seconds} sekunder siden Foreldrepenger ble stengt`}
+                      >
+                        <TimeUnit value={foreldrepengerElapsedTime.days} label="dager" />
+                        <span className="separator" aria-hidden="true">:</span>
+                        <TimeUnit value={foreldrepengerElapsedTime.hours} label="timer" />
+                        <span className="separator" aria-hidden="true">:</span>
+                        <TimeUnit value={foreldrepengerElapsedTime.minutes} label="minutter" />
+                        <span className="separator" aria-hidden="true">:</span>
+                        <TimeUnit value={foreldrepengerElapsedTime.seconds} label="sekunder" />
+                      </div>
+                    </VStack>
+                  </Box>
+                </section>
+                <section aria-labelledby="sykdom-closure-title">
+                  <Box
+                    className="module closure-countup-card"
+                    background="surface-subtle"
+                    padding={{ xs: "space-4", md: "space-6" }}
+                    borderRadius="large"
+                  >
+                    <VStack gap="space-4" align="center">
+                      <VStack gap="space-2" align="center">
+                        <Heading id="sykdom-closure-title" level="2" size="medium">
+                          Tid siden Sykdom i familien ble stengt
+                        </Heading>
+                        <BodyShort size="small">15. oktober 2026 kl. 07:22</BodyShort>
+                      </VStack>
+                      <div
+                        className="closure-countup"
+                        role="timer"
+                        aria-live="off"
+                        aria-label={`${sykdomIFamilienElapsedTime.days} dager, ${sykdomIFamilienElapsedTime.hours} timer, ${sykdomIFamilienElapsedTime.minutes} minutter og ${sykdomIFamilienElapsedTime.seconds} sekunder siden Sykdom i familien ble stengt`}
+                      >
+                        <TimeUnit value={sykdomIFamilienElapsedTime.days} label="dager" />
+                        <span className="separator" aria-hidden="true">:</span>
+                        <TimeUnit value={sykdomIFamilienElapsedTime.hours} label="timer" />
+                        <span className="separator" aria-hidden="true">:</span>
+                        <TimeUnit value={sykdomIFamilienElapsedTime.minutes} label="minutter" />
+                        <span className="separator" aria-hidden="true">:</span>
+                        <TimeUnit value={sykdomIFamilienElapsedTime.seconds} label="sekunder" />
+                      </div>
+                    </VStack>
+                  </Box>
+                </section>
+              </HGrid>
             </section>
           </VStack>
         </section>

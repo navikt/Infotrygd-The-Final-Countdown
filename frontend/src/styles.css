@@ -70,6 +70,39 @@ main {
   color: #262626;
 }
 
+.closure-countup-card {
+  display: grid;
+  min-height: clamp(10rem, 12vw, 12rem);
+  place-items: center;
+  border-top: 0.25rem solid var(--ax-text-success-decoration);
+  background: #fff;
+  color: #262626;
+  text-align: center;
+}
+
+.closure-countup {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(2.5rem, 1fr) auto minmax(2.5rem, 1fr) auto minmax(2.5rem, 1fr) auto minmax(2.5rem, 1fr);
+  align-items: start;
+  justify-content: center;
+  gap: clamp(0.15rem, 1vw, 0.75rem);
+  text-align: center;
+}
+
+.closure-countup .time-unit {
+  gap: 0.4rem;
+}
+
+.closure-countup .time-value {
+  font-size: clamp(1.25rem, 2vw, 2rem);
+}
+
+.closure-countup .time-label {
+  font-size: clamp(0.6rem, 1vw, 0.8rem);
+  letter-spacing: 0.04em;
+}
+
 .achievement-text {
   display: flex;
   align-items: center;
