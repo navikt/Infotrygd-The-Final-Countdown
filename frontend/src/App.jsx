@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BodyLong, BodyShort, Box, HGrid, Heading, VStack } from "@navikt/ds-react";
-import { CircleFillIcon, StarFillIcon } from "@navikt/aksel-icons";
+import { CircleFillIcon } from "@navikt/aksel-icons";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
-const BAKS_CLOSURE_TIME = new Date("2026-09-01T00:00:00+02:00").getTime();
 const FORELDREPENGER_CLOSURE_TIME = new Date("2026-10-14T07:27:00+02:00").getTime();
 const SYKDOM_I_FAMILIEN_CLOSURE_TIME = new Date("2026-10-15T07:22:00+02:00").getTime();
 const SECOND = 1_000;
@@ -54,7 +53,6 @@ function StatusCircle({ status }) {
 
 export default function App() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft);
-  const baksElapsedTime = getElapsedTime(BAKS_CLOSURE_TIME);
   const foreldrepengerElapsedTime = getElapsedTime(FORELDREPENGER_CLOSURE_TIME);
   const sykdomIFamilienElapsedTime = getElapsedTime(SYKDOM_I_FAMILIEN_CLOSURE_TIME);
 
@@ -194,14 +192,14 @@ export default function App() {
                   <StatusCircle status="success" />
                   <BodyShort weight="semibold">Foreldrepenger</BodyShort>
                   <BodyShort size="small">
-                    Skrudd av i 4.kvartal av Team Foreldrepenger
+                    Skrudd av i 4.kvartal 2026 av Team Foreldrepenger
                   </BodyShort>
                 </li>
                 <li>
                   <StatusCircle status="success" />
                   <BodyShort weight="semibold">Sykdom i familien</BodyShort>
                   <BodyShort size="small">
-                    Skrudd av i 4.kvartal av Team Sykdom i familien
+                    Skrudd av i 4.kvartal 2026 av Team Sykdom i familien
                   </BodyShort>
                 </li>
               </ul>
@@ -329,34 +327,6 @@ export default function App() {
           </Box>
         </section>
             </HGrid>
-            <section aria-label="Milepæl for utfasing">
-              <Box
-                className="module achievement-card"
-                background="surface-subtle"
-                padding={{ xs: "space-4", md: "space-6" }}
-                borderRadius="large"
-              >
-                <VStack gap="space-4" align="center">
-                  <BodyShort className="achievement-text" weight="semibold">
-                    <StarFillIcon className="achievement-icon" aria-hidden="true" />
-                    Tid siden Team BAKS skrudde av kontantstøtte (1. september 2026):
-                    <StarFillIcon className="achievement-icon" aria-hidden="true" />
-                  </BodyShort>
-                  <div
-                    className="achievement-countup"
-                    role="timer"
-                    aria-live="off"
-                    aria-label={`${baksElapsedTime.days} dager, ${baksElapsedTime.hours} timer og ${baksElapsedTime.minutes} minutter siden kontantstøtte ble skrudd av`}
-                  >
-                    <TimeUnit value={baksElapsedTime.days} label="dager" />
-                    <span className="separator" aria-hidden="true">:</span>
-                    <TimeUnit value={baksElapsedTime.hours} label="timer" />
-                    <span className="separator" aria-hidden="true">:</span>
-                    <TimeUnit value={baksElapsedTime.minutes} label="minutter" />
-                  </div>
-                </VStack>
-              </Box>
-            </section>
             <section aria-label="Tid siden stenging">
               <HGrid gap="space-4" columns={{ xs: 1, md: 2 }}>
                 <section aria-labelledby="foreldrepenger-closure-title">

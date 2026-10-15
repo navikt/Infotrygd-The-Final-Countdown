@@ -47,11 +47,11 @@ describe('App', () => {
     const closedRoutines = screen.getByRole('region', { name: /tipp topp! allerede stengt/i })
     expect(within(closedRoutines).getByText('Foreldrepenger')).toBeTruthy()
     expect(
-      within(closedRoutines).getByText('Skrudd av i 4.kvartal av Team Foreldrepenger'),
+      within(closedRoutines).getByText('Skrudd av i 4.kvartal 2026 av Team Foreldrepenger'),
     ).toBeTruthy()
     expect(within(closedRoutines).getByText('Sykdom i familien')).toBeTruthy()
     expect(
-      within(closedRoutines).getByText('Skrudd av i 4.kvartal av Team Sykdom i familien'),
+      within(closedRoutines).getByText('Skrudd av i 4.kvartal 2026 av Team Sykdom i familien'),
     ).toBeTruthy()
   })
 
@@ -69,17 +69,13 @@ describe('App', () => {
     expect(screen.getByText('Hjelpemidler')).toBeTruthy()
   })
 
-  it('renders the Team BAKS achievement', () => {
+  it('does not render the removed Team BAKS clock', () => {
     render(<App />)
 
     expect(
-      screen.getByText('Tid siden Team BAKS skrudde av kontantstøtte (1. september 2026):'),
-    ).toBeTruthy()
-    expect(
-      screen.getByRole('timer', {
-        name: /dager, \d+ timer og \d+ minutter siden kontantstøtte ble skrudd av/i,
-      }),
-    ).toBeTruthy()
+      screen.queryByText('Tid siden Team BAKS skrudde av kontantstøtte (1. september 2026):'),
+    ).toBeNull()
+    expect(screen.getByText('Kontantstøtte')).toBeTruthy()
   })
 
   it('renders and updates the closure clocks while keeping the main clock counting down', () => {
