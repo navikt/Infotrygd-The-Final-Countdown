@@ -3,6 +3,8 @@
 # =========================
 FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:24-dev AS builder
 
+RUN node -e 'const [major, minor, patch] = process.versions.node.split(".").map(Number); if (major !== 24 || minor < 22 || (minor === 22 && patch < 1)) throw new Error("Node.js >=24.22.1 <25 is required (CVE-2026-111497)");'
+
 WORKDIR /app
 
 # Copy dependency files first (better caching)
