@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { BodyLong, BodyShort, Box, HGrid, Heading, VStack } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Button, HGrid, Heading, HStack, VStack } from "@navikt/ds-react";
 import { CircleFillIcon } from "@navikt/aksel-icons";
+import DevelopmentPhases from "./DevelopmentPhases.jsx";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
 const FORELDREPENGER_CLOSURE_TIME = new Date("2026-10-14T07:27:00+02:00").getTime();
@@ -51,7 +52,7 @@ function StatusCircle({ status }) {
   );
 }
 
-export default function App() {
+function Countdown() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft);
   const foreldrepengerElapsedTime = getElapsedTime(FORELDREPENGER_CLOSURE_TIME);
   const sykdomIFamilienElapsedTime = getElapsedTime(SYKDOM_I_FAMILIEN_CLOSURE_TIME);
@@ -67,6 +68,11 @@ export default function App() {
   return (
     <main>
       <VStack className="dashboard" gap="space-4">
+        <HStack as="nav" aria-label="Sidenavigasjon" justify="end">
+          <Button as="a" role="link" href="#utviklingsfaser" variant="tertiary" size="small">
+            Utviklingsfaser
+          </Button>
+        </HStack>
         <section aria-labelledby="countdown-title">
           <Box
             className="module countdown-card"
@@ -76,7 +82,7 @@ export default function App() {
           >
             <VStack gap="space-2">
               <div className="eyebrow">The Final Countdown</div>
-              <Heading id="countdown-title" level="1" size="xlarge">
+              <Heading id="countdown-title" level="1" size="xlarge" tabIndex={-1}>
                 31. desember 2028
               </Heading>
               <BodyLong className="intro">
@@ -286,26 +292,26 @@ export default function App() {
                   </BodyShort>
                 </li>
                 <li>
-                  <StatusCircle status="danger" />
+                  <StatusCircle status="warning" />
                   <BodyShort weight="semibold">Forsikringsordninger</BodyShort>
                   <BodyShort size="small">
-                    Ikke påbegynt!
+                    Påbegynt
                   </BodyShort>
                 </li>
                 <li>
-                  <StatusCircle status="danger" />
+                  <StatusCircle status="warning" />
                   <BodyShort weight="semibold">
                     Gravferdsstønad og båretransport
                   </BodyShort>
                   <BodyShort size="small">
-                    Ikke påbegynt!
+                    Påbegynt
                   </BodyShort>
                 </li>
                 <li>
-                  <StatusCircle status="danger" />
+                  <StatusCircle status="warning" />
                   <BodyShort weight="semibold">Grunn- og hjelpestønad</BodyShort>
                   <BodyShort size="small">
-                    Ikke påbegynt!
+                    Påbegynt
                   </BodyShort>
                 </li>
                 <li>
@@ -398,4 +404,27 @@ export default function App() {
       </VStack>
     </main>
   );
+}
+
+export default function App() {
+  const [showPhases, setShowPhases] = useState(
+    () => window.location.hash === "#utviklingsfaser",
+  );
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setShowPhases(window.location.hash === "#utviklingsfaser");
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    document.title = showPhases
+      ? "Utviklingsfaser – Infotrygd"
+      : "Infotrygd – The Final Countdown";
+    document.querySelector("h1")?.focus();
+  }, [showPhases]);
+
+  return showPhases ? <DevelopmentPhases /> : <Countdown />;
 }

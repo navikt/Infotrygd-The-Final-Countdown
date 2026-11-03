@@ -1,8 +1,60 @@
-import { act, render, screen, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { vi } from 'vitest'
 import App from './App.jsx'
 
+afterEach(() => {
+  cleanup()
+  window.history.replaceState(null, '', '/')
+})
+
 describe('App', () => {
+  it('opens the phases page and returns to the countdown', async () => {
+    render(<App />)
+
+    fireEvent.click(screen.getByRole('link', { name: 'Utviklingsfaser' }))
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Utfasingen i overblikk.' })).toBeTruthy()
+    })
+    expect(document.activeElement).toBe(screen.getByRole('heading', { level: 1 }))
+    expect(screen.queryByRole('timer')).toBeNull()
+    expect(screen.getByRole('status').textContent).toContain('Viser 11 av 20 områder')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Vis områder med grønt (9)' }))
+    expect(screen.getByRole('status').textContent).toContain('Viser 20 av 20 områder')
+    expect(screen.getByText('Skrudd av 14.10.2026')).toBeTruthy()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Skjul områder med grønt (9)' }))
+    expect(screen.getByRole('status').textContent).toContain('Viser 11 av 20 områder')
+    expect(screen.queryByText('Skrudd av 14.10.2026')).toBeNull()
+
+    fireEvent.click(screen.getByRole('link', { name: 'Tilbake til forsiden' }))
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: '31. desember 2028' })).toBeTruthy()
+    })
+    expect(screen.getByRole('timer', { name: /sekunder igjen/i })).toBeTruthy()
+  })
+
+  it('supports direct links and browser history navigation', () => {
+    window.history.replaceState(null, '', '/#utviklingsfaser')
+    render(<App />)
+
+    expect(screen.getByRole('heading', { name: 'Utfasingen i overblikk.' })).toBeTruthy()
+    expect(document.title).toBe('Utviklingsfaser – Infotrygd')
+
+    act(() => {
+      window.history.replaceState(null, '', '/')
+      window.dispatchEvent(new HashChangeEvent('hashchange'))
+    })
+    expect(screen.getByRole('heading', { name: '31. desember 2028' })).toBeTruthy()
+
+    act(() => {
+      window.history.replaceState(null, '', '/#utviklingsfaser')
+      window.dispatchEvent(new HashChangeEvent('hashchange'))
+    })
+    expect(screen.getByRole('heading', { name: 'Utfasingen i overblikk.' })).toBeTruthy()
+  })
+
   it('renders the countdown heading and intro text', () => {
     render(<App />)
 
@@ -55,7 +107,7 @@ describe('App', () => {
     ).toBeTruthy()
   })
 
-  it('renders routines where closure has not started', () => {
+  it('renders routines still being phased out', () => {
     render(<App />)
 
     expect(
@@ -67,6 +119,20 @@ describe('App', () => {
     expect(screen.getByText('Gjenlevende')).toBeTruthy()
     expect(screen.getByText('Helsetjenester')).toBeTruthy()
     expect(screen.getByText('Hjelpemidler')).toBeTruthy()
+  })
+
+  it.each([
+    'Forsikringsordninger',
+    'Gravferdsstønad og båretransport',
+    'Grunn- og hjelpestønad',
+  ])('renders %s with orange status and the subtitle Påbegynt', (name) => {
+    render(<App />)
+
+    const routine = screen.getByText(name).closest('li')
+    expect(within(routine).getByText('Påbegynt')).toBeTruthy()
+    expect(routine.querySelector('.status-circle--warning')).toBeTruthy()
+    expect(routine.querySelector('.status-circle--danger')).toBeNull()
+    expect(within(routine).queryByText('Ikke påbegynt!')).toBeNull()
   })
 
   it('does not render the removed Team BAKS clock', () => {
