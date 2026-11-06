@@ -65,6 +65,53 @@ describe('App', () => {
     ).toBeTruthy()
   })
 
+  it('updates rounded working days only when the countdown day count changes', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2028-12-22T23:59:58+01:00'))
+
+    try {
+      render(<App />)
+
+      const countdown = screen.getByRole('region', { name: '31. desember 2028' })
+      const workingDays = within(countdown).getByText(/Gjenstående arbeidsdager:/)
+      expect(workingDays.textContent).toBe('Gjenstående arbeidsdager: 6')
+      expect(within(countdown).getByRole('timer').getAttribute('aria-label')).toContain('9 dager,')
+      expect(workingDays.nextElementSibling).toBe(within(countdown).getByText(/Søndag 31\.12\.2028/))
+
+      act(() => {
+        vi.advanceTimersByTime(1_000)
+      })
+      expect(workingDays.textContent).toBe('Gjenstående arbeidsdager: 6')
+      expect(within(countdown).getByRole('timer').getAttribute('aria-label')).toContain('9 dager,')
+
+      act(() => {
+        vi.advanceTimersByTime(1_000)
+      })
+      expect(within(countdown).getByRole('timer').getAttribute('aria-label')).toContain('8 dager,')
+      expect(workingDays.textContent).toBe('Gjenstående arbeidsdager: 5')
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it.each([
+    '2028-12-31T23:59:58+01:00',
+    '2028-12-31T23:59:59+01:00',
+    '2029-01-01T00:00:00+01:00',
+  ])('shows zero working days at %s', (now) => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(now))
+
+    try {
+      render(<App />)
+
+      expect(screen.getByText(/Gjenstående arbeidsdager:/).textContent)
+        .toBe('Gjenstående arbeidsdager: 0')
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   it('renders the closed Infotrygd routines', () => {
     render(<App />)
 

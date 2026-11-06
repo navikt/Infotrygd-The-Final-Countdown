@@ -172,6 +172,11 @@ main {
   color: #5c5652;
 }
 
+.working-days {
+  font-size: calc(var(--ax-font-size-xlarge) * 2);
+  line-height: 1.3;
+}
+
 .complete-message {
   margin: 3rem 0;
   color: #262626;
