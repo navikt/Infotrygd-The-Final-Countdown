@@ -114,6 +114,9 @@ function Countdown() {
               <div className="progress-line" aria-hidden="true">
                 <span />
               </div>
+              <BodyShort className="working-days" size="large" aria-live="polite" aria-atomic="true">
+                Gjenstående arbeidsdager: <strong>{Math.round(timeLeft.days * 0.616)}</strong>
+              </BodyShort>
               <BodyLong className="date-note" size="small">
                 Søndag 31.12.2028 · kl. 23:59:59
               </BodyLong>
