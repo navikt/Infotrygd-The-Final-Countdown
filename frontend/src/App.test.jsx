@@ -18,6 +18,9 @@ describe('App', () => {
     })
     expect(document.activeElement).toBe(screen.getByRole('heading', { level: 1 }))
     expect(screen.queryByRole('timer')).toBeNull()
+    expect(within(screen.getByRole('list', { name: 'Fargemarkeringer' })).getByText(
+      'Nyutviklingsfase for nytt system (all saksbehandling fortsatt i Infotrygd)',
+    )).toBeTruthy()
     expect(screen.getByRole('status').textContent).toContain('Viser 11 av 20 områder')
 
     fireEvent.click(screen.getByRole('button', { name: 'Vis områder med grønt (9)' }))

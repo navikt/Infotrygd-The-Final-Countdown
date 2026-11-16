@@ -1,6 +1,6 @@
 export const phaseDefinitions = {
   rosa: "All saksbehandling i Infotrygd",
-  lilla: "Nyutviklingsfase for nytt system",
+  lilla: "Nyutviklingsfase for nytt system (all saksbehandling fortsatt i Infotrygd)",
   oransje: "Nytt system blir tatt i bruk (parallelt blir Infotrygd brukt)",
   grønn: "Skrudd av rutine i Infotrygd",
 };
