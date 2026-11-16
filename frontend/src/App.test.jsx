@@ -132,12 +132,22 @@ describe('App', () => {
       screen.getByRole('heading', { name: /hvem blir den neste\?/i }),
     ).toBeTruthy()
     const nextRoutines = screen.getByRole('region', { name: /hvem blir den neste\?/i })
-    expect(within(nextRoutines).getByText('Barnetrygd')).toBeTruthy()
+    expect(within(nextRoutines).queryByText('Barnetrygd')).toBeNull()
     expect(within(nextRoutines).getByText('Medlemskap')).toBeTruthy()
     expect(within(nextRoutines).getByText('Supplerende stønad')).toBeTruthy()
-    expect(within(nextRoutines).getByText('Kun 1 løpende sak og 16 åpne saker igjen')).toBeTruthy()
+    expect(screen.queryByText('Kun 1 løpende sak og 16 åpne saker igjen')).toBeNull()
     expect(within(nextRoutines).getByText('0 løpende saker og 70 åpne saker')).toBeTruthy()
     expect(within(nextRoutines).getByText('0 løpende saker og 83 åpne saker')).toBeTruthy()
+  })
+
+  it('renders Barnetrygd with green status among the closed routines', () => {
+    render(<App />)
+
+    const closedRoutines = screen.getByRole('region', { name: /tipp topp! allerede stengt/i })
+    const routine = within(closedRoutines).getByText('Barnetrygd').closest('li')
+    expect(within(routine).getByText('Skrudd av i 4. kvartal 2026 av Team BAKS.')).toBeTruthy()
+    expect(routine.querySelector('.status-circle--success')).toBeTruthy()
+    expect(screen.getAllByText('Barnetrygd')).toHaveLength(1)
   })
 
   it('renders Foreldrepenger and Sykdom i familien among the closed routines', () => {
@@ -193,7 +203,7 @@ describe('App', () => {
 
   it('renders and updates the closure clocks while keeping the main clock counting down', () => {
     vi.useFakeTimers()
-    vi.setSystemTime(new Date('2026-10-15T07:22:00+02:00'))
+    vi.setSystemTime(new Date('2026-11-11T07:28:00+01:00'))
 
     try {
       render(<App />)
@@ -201,21 +211,27 @@ describe('App', () => {
       const mainCountdown = screen.getByRole('timer', { name: /sekunder igjen/i })
       expect(mainCountdown).toBeTruthy()
       expect(
-        screen.getByRole('heading', { name: 'Tid siden Foreldrepenger ble stengt' }),
-      ).toBeTruthy()
-      expect(screen.getByText('14. oktober 2026 kl. 07:27')).toBeTruthy()
-      expect(
-        screen.getByRole('timer', {
-          name: '0 dager, 23 timer, 55 minutter og 0 sekunder siden Foreldrepenger ble stengt',
-        }),
-      ).toBeTruthy()
-      expect(
         screen.getByRole('heading', { name: 'Tid siden Sykdom i familien ble stengt' }),
       ).toBeTruthy()
       expect(screen.getByText('15. oktober 2026 kl. 07:22')).toBeTruthy()
       expect(
         screen.getByRole('timer', {
-          name: '0 dager, 0 timer, 0 minutter og 0 sekunder siden Sykdom i familien ble stengt',
+          name: '27 dager, 1 timer, 6 minutter og 0 sekunder siden Sykdom i familien ble stengt',
+        }),
+      ).toBeTruthy()
+      expect(
+        screen.getByRole('heading', { name: 'Tid siden Barnetrygd ble stengt' }),
+      ).toBeTruthy()
+      expect(screen.getByText('Onsdag 11. november 2026 kl. 07:28')).toBeTruthy()
+      expect(
+        screen.queryByRole('heading', { name: 'Tid siden Foreldrepenger ble stengt' }),
+      ).toBeNull()
+      expect(
+        screen.getAllByRole('heading', { name: /^Tid siden/ }).map((heading) => heading.textContent.trim()),
+      ).toEqual(['Tid siden Barnetrygd ble stengt', 'Tid siden Sykdom i familien ble stengt'])
+      expect(
+        screen.getByRole('timer', {
+          name: '0 dager, 0 timer, 0 minutter og 0 sekunder siden Barnetrygd ble stengt',
         }),
       ).toBeTruthy()
 
@@ -225,7 +241,12 @@ describe('App', () => {
 
       expect(
         screen.getByRole('timer', {
-          name: '0 dager, 0 timer, 0 minutter og 1 sekunder siden Sykdom i familien ble stengt',
+          name: '0 dager, 0 timer, 0 minutter og 1 sekunder siden Barnetrygd ble stengt',
+        }),
+      ).toBeTruthy()
+      expect(
+        screen.getByRole('timer', {
+          name: '27 dager, 1 timer, 6 minutter og 1 sekunder siden Sykdom i familien ble stengt',
         }),
       ).toBeTruthy()
     } finally {

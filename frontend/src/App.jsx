@@ -4,8 +4,8 @@ import { CircleFillIcon } from "@navikt/aksel-icons";
 import DevelopmentPhases from "./DevelopmentPhases.jsx";
 
 const TARGET_TIME = new Date("2028-12-31T23:59:59+01:00").getTime();
-const FORELDREPENGER_CLOSURE_TIME = new Date("2026-10-14T07:27:00+02:00").getTime();
 const SYKDOM_I_FAMILIEN_CLOSURE_TIME = new Date("2026-10-15T07:22:00+02:00").getTime();
+const BARNETRYGD_CLOSURE_TIME = new Date("2026-11-11T07:28:00+01:00").getTime();
 const SECOND = 1_000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
@@ -54,8 +54,8 @@ function StatusCircle({ status }) {
 
 function Countdown() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft);
-  const foreldrepengerElapsedTime = getElapsedTime(FORELDREPENGER_CLOSURE_TIME);
   const sykdomIFamilienElapsedTime = getElapsedTime(SYKDOM_I_FAMILIEN_CLOSURE_TIME);
+  const barnetrygdElapsedTime = getElapsedTime(BARNETRYGD_CLOSURE_TIME);
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -211,6 +211,13 @@ function Countdown() {
                     Skrudd av i 4.kvartal 2026 av Team Sykdom i familien
                   </BodyShort>
                 </li>
+                <li>
+                  <StatusCircle status="success" />
+                  <BodyShort weight="semibold">Barnetrygd</BodyShort>
+                  <BodyShort size="small">
+                    Skrudd av i 4. kvartal 2026 av Team BAKS.
+                  </BodyShort>
+                </li>
               </ul>
             </VStack>
           </Box>
@@ -230,13 +237,6 @@ function Countdown() {
                 </Heading>
               </div>
               <ul className="active-routine-list">
-                <li>
-                  <StatusCircle status="almost-ready" />
-                  <BodyShort weight="semibold">Barnetrygd</BodyShort>
-                  <BodyShort size="small">
-                    Kun 1 løpende sak og 16 åpne saker igjen
-                  </BodyShort>
-                </li>
                 <li>
                   <StatusCircle status="almost-ready" />
                   <BodyShort weight="semibold">Medlemskap</BodyShort>
@@ -338,7 +338,7 @@ function Countdown() {
             </HGrid>
             <section aria-label="Tid siden stenging">
               <HGrid gap="space-4" columns={{ xs: 1, md: 2 }}>
-                <section aria-labelledby="foreldrepenger-closure-title">
+                <section aria-labelledby="barnetrygd-closure-title">
                   <Box
                     className="module closure-countup-card"
                     background="surface-subtle"
@@ -347,24 +347,24 @@ function Countdown() {
                   >
                     <VStack gap="space-4" align="center">
                       <VStack gap="space-2" align="center">
-                        <Heading id="foreldrepenger-closure-title" level="2" size="medium">
-                          Tid siden Foreldrepenger ble stengt
+                        <Heading id="barnetrygd-closure-title" level="2" size="medium">
+                          Tid siden Barnetrygd ble stengt
                         </Heading>
-                        <BodyShort size="small">14. oktober 2026 kl. 07:27</BodyShort>
+                        <BodyShort size="small">Onsdag 11. november 2026 kl. 07:28</BodyShort>
                       </VStack>
                       <div
                         className="closure-countup"
                         role="timer"
                         aria-live="off"
-                        aria-label={`${foreldrepengerElapsedTime.days} dager, ${foreldrepengerElapsedTime.hours} timer, ${foreldrepengerElapsedTime.minutes} minutter og ${foreldrepengerElapsedTime.seconds} sekunder siden Foreldrepenger ble stengt`}
+                        aria-label={`${barnetrygdElapsedTime.days} dager, ${barnetrygdElapsedTime.hours} timer, ${barnetrygdElapsedTime.minutes} minutter og ${barnetrygdElapsedTime.seconds} sekunder siden Barnetrygd ble stengt`}
                       >
-                        <TimeUnit value={foreldrepengerElapsedTime.days} label="dager" />
+                        <TimeUnit value={barnetrygdElapsedTime.days} label="dager" />
                         <span className="separator" aria-hidden="true">:</span>
-                        <TimeUnit value={foreldrepengerElapsedTime.hours} label="timer" />
+                        <TimeUnit value={barnetrygdElapsedTime.hours} label="timer" />
                         <span className="separator" aria-hidden="true">:</span>
-                        <TimeUnit value={foreldrepengerElapsedTime.minutes} label="minutter" />
+                        <TimeUnit value={barnetrygdElapsedTime.minutes} label="minutter" />
                         <span className="separator" aria-hidden="true">:</span>
-                        <TimeUnit value={foreldrepengerElapsedTime.seconds} label="sekunder" />
+                        <TimeUnit value={barnetrygdElapsedTime.seconds} label="sekunder" />
                       </div>
                     </VStack>
                   </Box>
