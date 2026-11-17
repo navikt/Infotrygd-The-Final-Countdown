@@ -107,7 +107,8 @@ const markings = {
   ],
   Yrkesskade: [
     { start: 20111, end: 20212, color: "rosa" },
-    { start: 20221, end: 20262, color: "lilla", endDate: new Date(2026, 9, 29) },
+    { start: 20221, end: 20231, color: "lilla" },
+    { start: 20232, end: "today", color: "oransje" },
   ],
   Forsikringer: [
     { start: 20111, end: 20261, color: "rosa" },
@@ -133,6 +134,7 @@ const markings = {
 };
 
 export function getPeriods(item) {
+  const today = new Date();
   const periods = [...(markings[item] ?? [])];
   const date = greenStarts[item];
 
@@ -151,6 +153,8 @@ export function getPeriods(item) {
     startDate: period.startDate
       ?? new Date(Math.floor(period.start / 10), period.start % 10 === 1 ? 0 : 6, 1),
     endDate: period.endDate
-      ?? new Date(Math.floor(period.end / 10), period.end % 10 === 1 ? 6 : 12, 0),
+      ?? (period.end === "today"
+        ? new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999)
+        : new Date(Math.floor(period.end / 10), period.end % 10 === 1 ? 6 : 12, 0)),
   }));
 }
