@@ -33,7 +33,8 @@ frontend/
 ├── tsconfig.json       TypeScript-konfigurasjon
 ├── .env.example        Eksempel på miljøvariabler
 ├── Dockerfile          Container for appen
-├── nginx.conf          Nginx-konfig for produksjon
+├── server.mjs          Node.js-server for statiske filer i produksjon
+├── server.test.mjs     Tester for produksjonsserveren
 ├── public/             Statisk innhold
 └── node_modules/       Installerte pakker (lokalt)
 ```
@@ -61,7 +62,7 @@ cd frontend
 pnpm test
 ```
 
-Dette kjører Vitest med en enkel smoke-test for `App.jsx`.
+Dette kjører Vitest for frontend-koden og Node.js-tester for produksjonsserveren.
 
 ## Bygg for produksjon
 
@@ -71,6 +72,19 @@ pnpm build
 ```
 
 Den produserte byggfilen ligger i `frontend/dist`.
+
+Containeren bruker Chainguard Node.js 24 fra Navs registry og serverer filene
+med `server.mjs` på port 8080. Serveren bruker bare innebygde Node.js-moduler.
+Den beholder SPA-ruting, sikkerhetsheadere og helseendepunktene
+`/internal/isAlive` og `/internal/isReady`. Filer under `/assets/` caches i ett
+år, mens HTML ikke caches.
+
+Start produksjonsserveren lokalt etter bygg:
+
+```bash
+cd frontend
+node server.mjs
+```
 
 ## Forhåndsvis bygg
 
@@ -92,4 +106,3 @@ Deretter beregnes antall dager, timer, minutter og sekunder som er igjen, og dis
 ## Nye endringer
 
 Dette repoet er nå navngitt for prosjektet `Infotrygd-The-Final-Countdown` og er tilpasset den faktiske koden i `frontend/src`, ikke en gammel kopi fra en annen app.
-

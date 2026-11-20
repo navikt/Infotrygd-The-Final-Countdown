@@ -24,15 +24,16 @@ COPY . .
 RUN pnpm build
 
 
-# =========================
-# Runtime stage (Chainguard nginx)
-# =========================
-FROM cgr.dev/chainguard/nginx:latest
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:24-slim AS runtime
 
-# Copy built static assets
-COPY --from=builder /app/dist /usr/share/nginx/html
+RUN ["node", "-e", "const [major, minor, patch] = process.versions.node.split('.').map(Number); if (major !== 24 || minor < 22 || (minor === 22 && patch < 1)) throw new Error('Node.js >=24.22.1 <25 is required (CVE-2026-111497)');"]
 
-# Set custom nginx config  
-COPY nginx.conf /etc/nginx/nginx.conf
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY server.mjs ./
 
+USER 65532:65532
 EXPOSE 8080
+ENTRYPOINT ["node"]
+CMD ["server.mjs"]
