@@ -32,6 +32,17 @@ const contentTypes = {
 };
 
 async function readAsset(root, pathname) {
+  if (
+    typeof pathname !== "string" ||
+    !pathname.startsWith("/") ||
+    /[\\\0]/.test(pathname) ||
+    pathname.split("/").some((part) => part === "." || part === "..")
+  ) {
+    throw Object.assign(new Error("Invalid asset path"), {
+      code: "ERR_OUTSIDE_STATIC_ROOT",
+    });
+  }
+
   const filename = await realpath(resolve(root, `.${pathname}`));
   const location = relative(root, filename);
   if (location === ".." || location.startsWith(`..${sep}`) || isAbsolute(location)) {
