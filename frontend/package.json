@@ -11,7 +11,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run && node --test server.test.mjs"
   },
   "dependencies": {
     "@navikt/aksel-icons": "^8.22.1",
