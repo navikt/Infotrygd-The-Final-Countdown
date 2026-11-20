@@ -31,7 +31,7 @@ const contentTypes = {
   ".webmanifest": "application/manifest+json",
 };
 
-async function readAsset(root, pathname) {
+export async function readAsset(root, pathname) {
   if (
     typeof pathname !== "string" ||
     !pathname.startsWith("/") ||
@@ -43,9 +43,21 @@ async function readAsset(root, pathname) {
     });
   }
 
-  const filename = await realpath(resolve(root, `.${pathname}`));
+  const candidate = resolve(root, `.${pathname}`);
+  const candidateLocation = relative(root, candidate);
+  if (
+    candidateLocation === ".." ||
+    candidateLocation.startsWith(".." + sep) ||
+    isAbsolute(candidateLocation)
+  ) {
+    throw Object.assign(new Error("File outside static root"), {
+      code: "ERR_OUTSIDE_STATIC_ROOT",
+    });
+  }
+
+  const filename = await realpath(candidate);
   const location = relative(root, filename);
-  if (location === ".." || location.startsWith(`..${sep}`) || isAbsolute(location)) {
+  if (location === ".." || location.startsWith(".." + sep) || isAbsolute(location)) {
     throw Object.assign(new Error("File outside static root"), {
       code: "ERR_OUTSIDE_STATIC_ROOT",
     });

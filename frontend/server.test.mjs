@@ -5,15 +5,16 @@ import { request } from "node:http";
 import { join } from "node:path";
 import { after, before, test } from "node:test";
 import { fileURLToPath } from "node:url";
-import { createStaticServer } from "./server.mjs";
+import { createStaticServer, readAsset } from "./server.mjs";
 
 let directory;
+let root;
 let server;
 let port;
 
 before(async () => {
   directory = await mkdtemp(fileURLToPath(new URL("./.server-test-", import.meta.url)));
-  const root = join(directory, "dist");
+  root = join(directory, "dist");
   await mkdir(join(root, "assets"), { recursive: true });
   await writeFile(join(root, "index.html"), "<!doctype html><h1>Countdown</h1>");
   await writeFile(join(root, "assets/app-abc123.js"), "console.log('countdown');");
@@ -22,6 +23,10 @@ before(async () => {
   await writeFile(join(root, "manifest.json"), '{"name":"Countdown"}');
   await writeFile(join(directory, "outside.txt"), "not public");
   await symlink(join(directory, "outside.txt"), join(root, "assets/link.txt"));
+  await mkdir(join(directory, "dist-other"));
+  await writeFile(join(directory, "dist-other/secret.txt"), "not public");
+  await symlink(join(directory, "dist-other"), join(root, "assets/outside-dir"));
+  await symlink(join(root, "assets/app-abc123.js"), join(root, "assets/internal-link.js"));
   server = await createStaticServer(root);
   server.listen(0, "127.0.0.1");
   await once(server, "listening");
@@ -135,10 +140,54 @@ test("rejects malformed, traversal, hidden-file and escaping symlink paths", asy
     ["/assets/%2e%2e/%2e%2e/outside.txt", 403],
     ["/.env", 403],
     ["/assets/link.txt", 403],
+    ["/assets/outside-dir/secret.txt", 403],
   ]) {
     const response = await get(path);
     assert.equal(response.status, status, path);
     assert.doesNotMatch(response.body, /not public/);
+  }
+});
+
+test("validates paths at the file-reading boundary", async () => {
+  for (const path of [
+    null,
+    123,
+    "assets/app-abc123.js",
+    "/../outside.txt",
+    "/assets/../../outside.txt",
+    "/assets/./app-abc123.js",
+    "/assets\\app-abc123.js",
+    "/assets/\0app.js",
+  ]) {
+    await assert.rejects(readAsset(root, path), { code: "ERR_OUTSIDE_STATIC_ROOT" });
+  }
+  const asset = await readAsset(root, "/assets/app-abc123.js");
+  assert.equal(asset.body.toString(), "console.log('countdown');");
+});
+
+test("contains canonical paths without rejecting internal symlinks", async () => {
+  for (const path of ["/assets/link.txt", "/assets/outside-dir/secret.txt"]) {
+    await assert.rejects(readAsset(root, path), { code: "ERR_OUTSIDE_STATIC_ROOT" });
+  }
+  const asset = await readAsset(root, "/assets/internal-link.js");
+  assert.equal(asset.body.toString(), "console.log('countdown');");
+  const response = await get("/assets/internal-link.js");
+  assert.equal(response.status, 200);
+  assert.equal(response.headers["content-type"], "text/javascript; charset=utf-8");
+});
+
+test("does not bypass containment through the SPA fallback", async () => {
+  await rm(join(root, "index.html"));
+  try {
+    await symlink(join(directory, "outside.txt"), join(root, "index.html"));
+    for (const path of ["/", "/nested/route"]) {
+      const response = await get(path);
+      assert.equal(response.status, 403);
+      assert.doesNotMatch(response.body, /not public/);
+    }
+  } finally {
+    await rm(join(root, "index.html"));
+    await writeFile(join(root, "index.html"), "<!doctype html><h1>Countdown</h1>");
   }
 });
 
